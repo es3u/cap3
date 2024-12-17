@@ -2,7 +2,11 @@ package com.example.markting_test.Service;
 
 import com.example.markting_test.ApiResponse.ApiException;
 import com.example.markting_test.Model.Booking_OneTime;
+import com.example.markting_test.Model.Company;
+import com.example.markting_test.Model.Influencer;
 import com.example.markting_test.Repository.Booking_OneTimeRepository;
+import com.example.markting_test.Repository.CompanyRepository;
+import com.example.markting_test.Repository.InfluencerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +16,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Booking_OneTimeService {
     private final Booking_OneTimeRepository bookingOneTimeRepository;
+    private final InfluencerRepository influencerRepository;
+    private final CompanyRepository companyRepository;
 
     public List getAll(){
         return bookingOneTimeRepository.findAll();
     }
 
     public void addBookingOneTime(Booking_OneTime booking_OneTime){
+        Influencer influencer = influencerRepository.findInfluencerById(booking_OneTime.getInfluencer().getId());
+        if(influencer == null){
+            throw new ApiException("influencer not found");
+        }
+
+        Company company = companyRepository.findCompanyById(booking_OneTime.getCompany().getId());
+        if(company == null){
+            throw new ApiException("company not found");
+        }
+
+        booking_OneTime.setInfluencer(influencer);
+        booking_OneTime.setCompany(company);
+        companyRepository.save(company);
+        influencerRepository.save(influencer);
         bookingOneTimeRepository.save(booking_OneTime);
+
     }
 
     public void updateBookingOneTime(Integer id , Booking_OneTime booking_OneTime){

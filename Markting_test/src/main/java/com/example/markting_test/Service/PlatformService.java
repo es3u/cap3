@@ -1,6 +1,8 @@
 package com.example.markting_test.Service;
 import com.example.markting_test.ApiResponse.ApiException;
+import com.example.markting_test.Model.Influencer;
 import com.example.markting_test.Model.Platform;
+import com.example.markting_test.Repository.InfluencerRepository;
 import com.example.markting_test.Repository.PlatformRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,12 +13,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlatformService {
     private final PlatformRepository platformRepository;
+    private final InfluencerRepository influencerRepository;
 
     public List<Platform> getAllPlatform(){
         return platformRepository.findAll();
     }
 
-    public void addPlatform(Platform platform){
+    public void addPlatform(Integer id ,Platform platform){
+        Influencer influencer = influencerRepository.findInfluencerById(id);
+        if (influencer == null){
+            throw new ApiException("influencer not found");
+        }
+        platform.setInfluencer(influencer);
+        influencerRepository.save(influencer);
         platformRepository.save(platform);
     }
 

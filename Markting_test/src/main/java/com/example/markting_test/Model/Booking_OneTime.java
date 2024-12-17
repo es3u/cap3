@@ -55,6 +55,7 @@ public class Booking_OneTime {
 //    @JoinColumn(name = "type", nullable = false)
     @JsonIgnore
     private Type type;
+
     @OneToMany(mappedBy = "bookingOneTime", cascade = CascadeType.ALL)
     private Set<Review> reviews;
 

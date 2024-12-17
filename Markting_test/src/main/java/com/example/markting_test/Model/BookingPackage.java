@@ -18,7 +18,7 @@ import java.util.Date;
 public class BookingPackage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer bookingPackageId;
+    private Integer id;
 
 
     @NotNull(message = "Booking date cannot be null")
@@ -46,5 +46,5 @@ public class BookingPackage {
 
     @ManyToOne
     @JsonIgnore
-    private Package packageEntity;
+    private Package Package;
 }

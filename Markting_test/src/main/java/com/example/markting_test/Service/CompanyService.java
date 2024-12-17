@@ -1,7 +1,8 @@
 package com.example.markting_test.Service;
 
-import com.example.marketing.DTOs.CompanyDTO;
 
+import com.example.markting_test.ApiResponse.ApiException;
+import com.example.markting_test.DTOout.CompanyDTO;
 import com.example.markting_test.Model.Company;
 import com.example.markting_test.Repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class CompanyService {
 
     public CompanyDTO getCompanyById(Integer Company_id) {
 
-       Company com = companyRepository.findCompanyByCompany_id(Company_id);
+       Company com = companyRepository.findCompanyById(Company_id);
        if (com == null) {
            throw new RuntimeException("Company not found");
        }
@@ -41,9 +42,9 @@ public class CompanyService {
 
     public Company updateCompany(Company updatedCompany) {
 
-        Company existingCompany = companyRepository.findCompanyByCompany_id(updatedCompany.getCompany_id());
+        Company existingCompany = companyRepository.findCompanyById(updatedCompany.getId());
         if (existingCompany == null) {
-            throw new RuntimeException("Company not found with id: " + updatedCompany.getCompany_id());
+            throw new ApiException("Company not found ");
         }
 
         existingCompany.setCompany_name(updatedCompany.getCompany_name());
@@ -56,7 +57,7 @@ public class CompanyService {
 
 
     public void deleteCompany(Integer Company_id) {
-        Company company = companyRepository.findCompanyByCompany_id(Company_id);
+        Company company = companyRepository.findCompanyById(Company_id);
         companyRepository.delete(company);
     }
 

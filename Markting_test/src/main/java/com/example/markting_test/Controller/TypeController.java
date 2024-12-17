@@ -16,9 +16,9 @@ public class TypeController {
     public ResponseEntity getAllType(){
         return ResponseEntity.ok().body(typeService.getAllTypes());
     }
-    @PostMapping("/add")
-    public ResponseEntity addType(@RequestBody@Valid Type type){
-        typeService.addType(type);
+    @PostMapping("/add/{platformId}")
+    public ResponseEntity addType(@PathVariable Integer platformId ,@RequestBody@Valid Type type){
+        typeService.addType(platformId ,type);
         return ResponseEntity.ok().body("type added successfully");
     }
     @PutMapping("/update/{id}")

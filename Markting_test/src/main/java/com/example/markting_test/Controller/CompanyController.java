@@ -1,8 +1,9 @@
 package com.example.markting_test.Controller;
 
 import com.example.markting_test.ApiResponse.ApiResponse;
-import com.example.marketing.DTOs.CompanyDTO;
 
+
+import com.example.markting_test.DTOout.CompanyDTO;
 import com.example.markting_test.Model.Company;
 import com.example.markting_test.Service.CompanyService;
 import jakarta.validation.Valid;

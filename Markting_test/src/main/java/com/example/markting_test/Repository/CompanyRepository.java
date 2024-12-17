@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
-    @Query("select c from Company c where c.company_id=:company_id")
-  Company  findCompanyByCompany_id(@Param("company_id") Integer company_id);
+  Company  findCompanyById(Integer id);
 
 }

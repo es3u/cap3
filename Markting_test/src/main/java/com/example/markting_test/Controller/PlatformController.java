@@ -16,9 +16,9 @@ public class PlatformController {
     public ResponseEntity getAllPlatforms() {
         return ResponseEntity.ok().body(platformService.getAllPlatform());
     }
-    @PostMapping("/add")
-    public ResponseEntity addPlatform(@RequestBody@Valid Platform platform) {
-        platformService.addPlatform(platform);
+    @PostMapping("/add/{influencerId}")
+    public ResponseEntity addPlatform(@PathVariable Integer influencerId , @RequestBody@Valid Platform platform) {
+        platformService.addPlatform(influencerId ,platform);
         return ResponseEntity.ok().body("platform added successfully");
     }
     @PutMapping("/update/{id}")

@@ -1,11 +1,14 @@
 package com.example.markting_test.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.Set;
 
 
 @Entity
@@ -16,7 +19,7 @@ import lombok.*;
 public class Package {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer package_id;
+    private Integer id;
 
     @Min(value = 1, message = "Package times must be at least 1")
     @Column(nullable = false)
@@ -26,7 +29,7 @@ public class Package {
     @Column(nullable = false)
     private Double package_price;
 
-    @NotBlank(message = "Platform name cannot be blank")
+    @NotEmpty(message = "Platform name cannot be blank")
     @Size(min = 3, max = 50, message = "Platform name must be between 3 and 50 characters")
     @Column(nullable = false)
     private String platform_name;
@@ -35,6 +38,9 @@ public class Package {
     private Boolean isAvailable = false;
 
     @ManyToOne
-    @JoinColumn(name = "Influencer_Influencer_id", nullable = false)
+    @JsonIgnore
     private Influencer influencer;
+
+    @OneToMany(mappedBy = "Package", cascade = CascadeType.ALL)
+    private Set<BookingPackage> bookingPackages;
 }
